@@ -1,3 +1,10 @@
+Made by Richard Chan, Jun Chao Wu
+
+Name TBD
+A web app that users can use to find deals on used audio (headphones, IEMs, DACs, AMPs), anything you can find on HeadFi, AVexchange or eBay, by dynamically scraping listings from marketplaces and forums based on user query.
+
+Built with React, TypeScript for the front end and uses Puppeteer for scraping.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
