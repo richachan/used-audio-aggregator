@@ -1,4 +1,4 @@
-Made by Richard Chan, Jun Chao Wu
+Made by Richard Chan, Jun Chao Wu :X
 
 AVFind
 A web app that users can use to find deals on used audio (headphones, IEMs, DACs, AMPs), anything you can find on HeadFi, AVexchange or eBay, by dynamically scraping listings from marketplaces and forums based on user query.
@@ -13,12 +13,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
