@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import puppeteer from 'puppeteer';
 
+//scraper for getting 20 most recent listings from headfi forums
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { query } = req.query;
 
@@ -22,6 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       let count = 0;
 
       document.querySelectorAll('.block-row').forEach((item) => {
+        if (count >= maxListings) return
         const titleElement = item.querySelector('.contentRow-title a');
         const priceElement = item.querySelector('.contentRow-extra dd');
         
