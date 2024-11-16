@@ -8,23 +8,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Invalid query' });
   }
 
-  const maxListings = 20;
   const searchUrl = `https://www.head-fi.org/search/39110786/?q=${encodeURIComponent(query)}&t=hfc_listing&c[categories][0]=1&c[child_categories]=1&o=date`;
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
+  let count = 0;
 
   try {
     await page.goto(searchUrl, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.block-row'); // Ensure the content loads
 
-    const listings = await page.evaluate((maxListings) => {
+    const listings = await page.evaluate(() => {
       const results = [];
-      let count = 0;
+      
       document.querySelectorAll('.block-row').forEach((item) => {
-        if (count >= maxListings)  {
-          return;
-        }
-        
         const titleElement = item.querySelector('.contentRow-title a');
         const priceElement = item.querySelector('.contentRow-extra dd');
         
@@ -32,14 +28,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const link = titleElement ? `https://www.head-fi.org${titleElement.getAttribute('href')}` : '';
         const price = priceElement ? priceElement.textContent.trim() : null;
 
-        if (title && link) {
+        if (title && link && count < 5) {
           results.push({ title, link, price });
           count++
         }
       });
   
       return results;
-    },maxListings);
+    });
 
     await browser.close();
     res.status(200).json(listings);
