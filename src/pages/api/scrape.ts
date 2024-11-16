@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const searchUrl = `https://www.head-fi.org/search/39110786/?q=${encodeURIComponent(query)}&t=hfc_listing&c[categories][0]=1&c[child_categories]=1&o=date`;
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-
+  let count = 0;
   try {
     await page.goto(searchUrl, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.block-row'); // Ensure the content loads
@@ -27,8 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const link = titleElement ? `https://www.head-fi.org${titleElement.getAttribute('href')}` : '';
         const price = priceElement ? priceElement.textContent.trim() : null;
 
-        if (title && link) {
+        if (title && link && count < 5) {
           results.push({ title, link, price });
+          count++
         }
       });
       
