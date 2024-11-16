@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
       
       return results;
-    });
+    },maxListings);
 
     await browser.close();
     res.status(200).json(listings);
